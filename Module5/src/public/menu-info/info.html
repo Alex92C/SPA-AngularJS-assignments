@@ -1,0 +1,29 @@
+<div class="container">
+
+<h2>User Information</h2>
+<p ng-if="!control.registered">
+    Not signed up yet, <a ui-sref="public.menuSignUp">sign up now!</a>
+</p>
+<div ng-if="control.registered">
+    <p><b>Name  - </b>{{control.userInfo.fName}} {{control.userInfo.lName}}
+        <span ng-if="!(control.userInfo.fName.length) 
+        && !(control.userInfo.lName.length)">
+            (N/a)
+        </span>
+    </p>
+    <p><b>Email - </b>{{control.userInfo.email}}</p>
+    <p><b>Phone - </b>{{control.userInfo.phone}}
+        <span ng-if="!(control.userInfo.phone.length)">
+            (N/a)
+        </span>
+    </p>
+    <p>
+        <b>Favorite Meal</b>
+        <h3>{{control.mealItem.name}}</h3>
+        <img width="200" height="200" 
+            ng-src="images/menu/{{control.splitFav.shortCategory}}/{{control.splitFav.shortCategory}}{{control.splitFav.itemNumber}}.jpg">
+        <p>{{control.mealItem.description}}</p>
+    </p>
+</div>
+
+</div>
