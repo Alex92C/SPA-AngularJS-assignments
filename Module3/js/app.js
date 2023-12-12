@@ -41,6 +41,8 @@
                     menu.message = 'Nothing found!';
                     menu.found = [];
                 }
+            }).catch(function(error) {
+                console.error('Error occurred:', error);
             });
         };
 
@@ -68,6 +70,9 @@
                 }
 
                 return foundItems;
+            }).catch(function(error) {
+                console.error('Error occurred:', error);
+                throw error;  // Re-throw the error to ensure it isn't silently swallowed.
             });
         };
     }
