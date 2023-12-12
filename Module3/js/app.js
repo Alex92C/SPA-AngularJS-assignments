@@ -63,9 +63,17 @@
             }).then(function(response) {
                 var foundItems = [];
 
-                for (var i = 0; i < response.data['menu_items'].length; i++) {
-                    if (searchTerm.length > 0 && response.data['menu_items'][i]['description'].toLowerCase().indexOf(searchTerm) !== -1) {
-                        foundItems.push(response.data['menu_items'][i]);
+                // Iterate over the keys of response.data
+                for (var key in response.data) {
+                    if (response.data.hasOwnProperty(key)) {
+                        var category = response.data[key];
+
+                        // Iterate over the menu_items array of the current category
+                        for (var i = 0; i < category['menu_items'].length; i++) {
+                            if (searchTerm.length > 0 && category['menu_items'][i]['description'].toLowerCase().indexOf(searchTerm) !== -1) {
+                                foundItems.push(category['menu_items'][i]);
+                            }
+                        }
                     }
                 }
 
