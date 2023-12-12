@@ -12,19 +12,18 @@
             return $http({
                 method: "GET",
                 url: (ApiBasePath + '/categories.json')
-            }).then(function(response) {;
+            }).then(function(response) {
                 return response.data;
             });
         };
 
         service.getItemsForCategory = function(categoryShortName) {
-    return $http({
-        method: "GET",
-        url: (ApiBasePath + '/menu_items/' + categoryShortName + '.json')
-    }).then(function(response) {
-        return response.data.menu_items;
-    });
-};
+            return $http({
+                method: "GET",
+                url: (ApiBasePath + '/menu_items/' + categoryShortName + '.json')
+            }).then(function(response) {
+                return response.data.menu_items;
+            });
         };
     }
 })();
