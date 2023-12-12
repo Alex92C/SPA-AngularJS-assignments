@@ -18,12 +18,13 @@
         };
 
         service.getItemsForCategory = function(categoryShortName) {
-            return $http({
-                method: "GET",
-                url: (ApiBasePath + '/menu_items.json?category=' + categoryShortName)
-            }).then(function(response) {
-                return response.data.menu_items;
-            });
+    return $http({
+        method: "GET",
+        url: (ApiBasePath + '/menu_items/' + categoryShortName + '.json')
+    }).then(function(response) {
+        return response.data.menu_items;
+    });
+};
         };
     }
 })();
