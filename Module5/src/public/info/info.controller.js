@@ -1,21 +1,28 @@
-(function() {
+(()=>{
     'use strict';
+        
+    angular.module('public')
+    .controller('info', infoController);
+    
+    //Just catches rootScope "update" broadcasts and updates if it hears any.
+    infoController.$inject=['MenuService'];
+    function infoController(service){
+        let control = this;
 
-    var infoController = function(MenuService, ApiPath) {
-        var vm = this;
-        vm.apiPath = ApiPath;
+        control.userInfo = service.userInfo;
+        control.splitFav = control.userInfo.splitFav;
+        control.mealItem = control.userInfo.favMealItem;
+        
+        console.log("Info Controller Active!");
+        console.log(control.userInfo);
 
-        vm.signedUp = false;
-
-        vm.user = MenuService.getUser();
-        console.log('User is', vm.user);
-        if (angular.equals(vm.user, {})) {
-            vm.signedUp = false;
+        if (angular.equals(control.userInfo, {})){
+            control.registered=false;
         } else {
-            vm.signedUp = true;
+            control.registered=true;
         }
-    };
 
-    infoController.$inject = ['MenuService', 'ApiPath'];
-    angular.module('public').controller('InfoController', infoController);
+        console.log("Current registered state "+control.registered);
+    }
+
 })();
