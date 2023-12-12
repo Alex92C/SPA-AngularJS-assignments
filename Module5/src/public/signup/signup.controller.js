@@ -1,38 +1,41 @@
-(function() {
-    'use strict';
+/**TODO: Implement custom form verification to check if favMeal item exists
+ * upon input being un-focused.
+ */
+(()=>{
+'use strict';
+    
+angular.module('public')
+.controller('signUp', signController);
 
-    var signupController = function(MenuService) {
-        var vm = this;
+signController.$inject=['MenuService'];
+function signController(service){
+    let control=this;
+    control.userInfo={};
 
-        vm.user = {};
-        vm.favoriteDish = {};
+    /**Controls span elements for favMeal verification.
+     * Clicked true and mealExists false? Failure span visible.
+     * Both true? Success span visible.
+    */
+    control.verification={submitClicked: false, mealExists: false};
+    
+    //If reset button hit, send userInfo clear to service(For now we're just resetting in this page)
+    control.reset = () =>{ control.userInfo={}; };
 
-        vm.showError = false;       // When this value is true error about the favorite dish wiil be shown
-        vm.showMessage = false;     // When this value is true message about successfull signup will be shown
+    //If submit button hit (And all fields valid), store fields in service.
+    //Broadcast for userInfo to update.
+    control.submit = ()=> { 
+        service.updateInfo(control.userInfo)
+        .then(response=>{
+            control.verification.submitClicked = true;
+            control.verification.mealExists = response;
 
-        vm.signup = function(form) {
-            vm.showError = false;
-            vm.showMessage = false;
-            // If the form is not valid don't submit
-            if(form.$invalid) {
-                console.log('The form is not valid');
-                return;
-            }
-
-            MenuService.getFavoriteDish(vm.user.favoriteDish).then(function(response) {
-                vm.user.favoriteDishDetails = response.data;
-                console.log(vm.favoriteDish);
-                MenuService.saveUser(vm.user);
-                vm.showMessage = true;
-            }, function(error) {
-                console.log(error);
-                vm.showError = true;
-            });
-
-        }
+            console.log("Verification Result: " + response);
+            console.log(service.userInfo);
+        });
     };
 
+    //When favFood shortname field loses focus, make service call to validate 
+    //food exists in the menu.
+}
 
-    signupController.$inject = ['MenuService'];
-    angular.module('public').controller('SignupController', signupController);
 })();
