@@ -1,19 +1,29 @@
 <div class="container">
-    <div class="row">
-        <div ng-show="infoCtrl.signedUp">
-            <h1>Showing information for user.</h1>
-            <p>First name: {{infoCtrl.user.firstName}}</p>
-            <p>Last name: {{infoCtrl.user.lastName}}</p>
-            <p>Email: {{infoCtrl.user.email}}</p>
-            <p>Phone: {{infoCtrl.user.phone}}</p>
-            <p>Favorite dish: {{infoCtrl.user.favoriteDishDetails.name}}</p>
-            <p>{{infoCtrl.user.favoriteDishDetails.description}}</p>
-            <img class="img-responsive" ng-src="{{infoCtrl.apiPath}}/images/{{infoCtrl.user.favoriteDish}}.jpg" alt="{{infoCtrl.user.favoriteDishDetails.name}}" />
 
-        </div>
+<h2>User Information</h2>
+<p ng-if="!control.registered">
+    Not signed up yet, <a ui-sref="public.menuSignUp">sign up now!</a>
+</p>
+<div ng-if="control.registered">
+    <p><b>Name  - </b>{{control.userInfo.fName}} {{control.userInfo.lName}}
+        <span ng-if="!(control.userInfo.fName.length) 
+        && !(control.userInfo.lName.length)">
+            (N/a)
+        </span>
+    </p>
+    <p><b>Email - </b>{{control.userInfo.email}}</p>
+    <p><b>Phone - </b>{{control.userInfo.phone}}
+        <span ng-if="!(control.userInfo.phone.length)">
+            (N/a)
+        </span>
+    </p>
+    <p>
+        <b>Favorite Meal</b>
+        <h3>{{control.mealItem.name}}</h3>
+        <img width="200" height="200" 
+            ng-src="images/menu/{{control.splitFav.shortCategory}}/{{control.splitFav.shortCategory}}{{control.splitFav.itemNumber}}.jpg">
+        <p>{{control.mealItem.description}}</p>
+    </p>
+</div>
 
-        <div ng-hide="infoCtrl.signedUp">
-            <h1>You need to signup first. <a class="btn btn-default" ui-sref="public.signup">Signup now!</a></h1>
-        </div>
-    </div>
 </div>
